@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LeadEdge AI — Admin Dashboard</title>
+<link rel="icon" type="image/png" href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663471506516/vjCrzyxYmmFqZxuT.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #050D1A;
+    --navy-mid: #0A1628;
+    --navy-card: #0D1F38;
+    --navy-hover: #122B4A;
+    --steel: #1A3A5C;
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --gold-dim: #8B6914;
+    --cream: #F0E8D8;
+    --cream-muted: #A89880;
+    --red-alert: #E84040;
+    --green-ok: #2ECC71;
+    --blue-info: #3498DB;
+    --purple: #9B59B6;
+    --white: #FFFFFF;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--navy);
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── ADMIN NAV ── */
+  .admin-nav {
+    position: sticky; top: 0; z-index: 100;
+    padding: 16px 32px;
+    background: rgba(5,13,26,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .admin-nav-left { display: flex; align-items: center; gap: 16px; }
+  .admin-nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .admin-nav-logo img { width: 32px; height: 32px; object-fit: contain; }
+  .admin-nav-logo span {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: 18px;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .admin-badge {
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.25);
+    padding: 4px 12px; border-radius: 100px;
+    font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--gold-light);
+  }
+  .admin-nav-right { display: flex; align-items: center; gap: 16px; }
+  .admin-nav-link {
+    color: var(--cream-muted); text-decoration: none;
+    font-size: 13px; font-weight: 500;
+    transition: color 0.2s; padding: 6px 12px;
+  }
+  .admin-nav-link:hover { color: var(--gold-light); }
+  .admin-nav-link.active { color: var(--gold); }
+
+  /* ── MAIN LAYOUT ── */
+  .admin-main {
+    max-width: 1400px; margin: 0 auto;
+    padding: 32px;
+  }
+
+  /* ── STATS CARDS ── */
+  .stats-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 16px; margin-bottom: 32px;
+  }
+  .stat-card {
+    background: var(--navy-card);
+    border: 1px solid rgba(201,168,76,0.1);
+    border-top: 3px solid var(--gold);
+    padding: 24px;
+    position: relative; overflow: hidden;
+  }
+  .stat-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 60px;
+    background: linear-gradient(180deg, rgba(201,168,76,0.04) 0%, transparent 100%);
+  }
+  .stat-card.green { border-top-color: var(--green-ok); }
+  .stat-card.green::before { background: linear-gradient(180deg, rgba(46,204,113,0.04) 0%, transparent 100%); }
+  .stat-card.blue { border-top-color: var(--blue-info); }
+  .stat-card.blue::before { background: linear-gradient(180deg, rgba(52,152,219,0.04) 0%, transparent 100%); }
+  .stat-card.purple { border-top-color: var(--purple); }
+  .stat-card.purple::before { background: linear-gradient(180deg, rgba(155,89,182,0.04) 0%, transparent 100%); }
+  .stat-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--cream-muted);
+    margin-bottom: 8px; position: relative;
+  }
+  .stat-value {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 36px; font-weight: 800;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1; position: relative;
+  }
+  .stat-card.green .stat-value {
+    background: linear-gradient(135deg, #4ADE80, var(--green-ok));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .stat-card.blue .stat-value {
+    background: linear-gradient(135deg, #60A5FA, var(--blue-info));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .stat-card.purple .stat-value {
+    background: linear-gradient(135deg, #C084FC, var(--purple));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  /* ── TOOLBAR ── */
+  .toolbar {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 16px; gap: 16px; flex-wrap: wrap;
+  }
+  .toolbar-left { display: flex; align-items: center; gap: 12px; }
+  .toolbar-right { display: flex; align-items: center; gap: 12px; }
+  .toolbar h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 24px; font-weight: 700; color: var(--white);
+  }
+  .filter-btn {
+    background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.2);
+    color: var(--cream-muted); padding: 8px 16px;
+    border-radius: 4px; font-size: 12px; font-weight: 600;
+    letter-spacing: 0.5px; cursor: pointer;
+    transition: all 0.2s; font-family: 'Inter', sans-serif;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: rgba(201,168,76,0.15);
+    border-color: var(--gold);
+    color: var(--gold-light);
+  }
+  .search-input {
+    background: rgba(5,13,26,0.8);
+    border: 1px solid rgba(201,168,76,0.2);
+    color: var(--cream); padding: 8px 16px;
+    border-radius: 4px; font-size: 13px;
+    outline: none; font-family: 'Inter', sans-serif;
+    width: 240px; transition: border-color 0.2s;
+  }
+  .search-input:focus { border-color: var(--gold); }
+  .search-input::placeholder { color: var(--cream-muted); }
+  .export-btn {
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    color: var(--navy); padding: 8px 20px;
+    border: none; border-radius: 4px;
+    font-weight: 700; font-size: 12px; letter-spacing: 0.5px;
+    text-transform: uppercase; cursor: pointer;
+    transition: all 0.2s; font-family: 'Inter', sans-serif;
+  }
+  .export-btn:hover { opacity: 0.85; }
+
+  /* ── TABLE ── */
+  .table-container {
+    background: var(--navy-card);
+    border: 1px solid rgba(201,168,76,0.1);
+    border-radius: 4px; overflow: hidden;
+  }
+  table {
+    width: 100%; border-collapse: collapse;
+  }
+  thead {
+    background: rgba(201,168,76,0.06);
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+  th {
+    padding: 14px 16px; text-align: left;
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--gold);
+    white-space: nowrap;
+  }
+  td {
+    padding: 14px 16px; font-size: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    vertical-align: middle;
+  }
+  tr:hover td { background: rgba(26,58,92,0.2); }
+
+  .email-cell { color: var(--white); font-weight: 500; }
+  .name-cell { color: var(--cream); }
+  .agency-cell { color: var(--cream-muted); font-size: 13px; }
+  .phone-cell { color: var(--cream-muted); font-size: 13px; }
+  .plan-cell {
+    font-size: 11px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .plan-starter { color: var(--cream-muted); }
+  .plan-professional { color: var(--gold-light); }
+  .plan-agency { color: var(--purple); }
+  .plan-undecided { color: var(--cream-muted); font-style: italic; }
+
+  .status-badge {
+    display: inline-block; padding: 4px 10px;
+    border-radius: 100px; font-size: 11px;
+    font-weight: 700; letter-spacing: 0.5px;
+    text-transform: uppercase; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .status-pending {
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold-light);
+  }
+  .status-contacted {
+    background: rgba(52,152,219,0.1);
+    border: 1px solid rgba(52,152,219,0.3);
+    color: var(--blue-info);
+  }
+  .status-converted {
+    background: rgba(46,204,113,0.1);
+    border: 1px solid rgba(46,204,113,0.3);
+    color: var(--green-ok);
+  }
+  .status-unsubscribed {
+    background: rgba(232,64,64,0.1);
+    border: 1px solid rgba(232,64,64,0.3);
+    color: var(--red-alert);
+  }
+
+  .date-cell { color: var(--cream-muted); font-size: 12px; white-space: nowrap; }
+
+  .action-btn {
+    background: none; border: 1px solid rgba(201,168,76,0.2);
+    color: var(--cream-muted); padding: 4px 10px;
+    border-radius: 4px; font-size: 11px; cursor: pointer;
+    transition: all 0.2s; font-family: 'Inter', sans-serif;
+    margin-right: 4px;
+  }
+  .action-btn:hover { border-color: var(--gold); color: var(--gold-light); }
+  .action-btn.danger:hover { border-color: var(--red-alert); color: var(--red-alert); }
+
+  /* ── STATUS DROPDOWN ── */
+  .status-dropdown {
+    position: relative; display: inline-block;
+  }
+  .status-menu {
+    display: none; position: absolute; top: 100%; left: 0;
+    background: var(--navy-mid); border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 4px; padding: 4px 0; z-index: 50;
+    min-width: 140px; margin-top: 4px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  }
+  .status-menu.open { display: block; }
+  .status-option {
+    display: block; width: 100%; padding: 8px 16px;
+    background: none; border: none; color: var(--cream);
+    font-size: 13px; text-align: left; cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.15s;
+  }
+  .status-option:hover { background: rgba(201,168,76,0.08); }
+
+  /* ── EMPTY STATE ── */
+  .empty-state {
+    text-align: center; padding: 80px 32px;
+    color: var(--cream-muted);
+  }
+  .empty-state .icon { font-size: 48px; margin-bottom: 16px; opacity: 0.5; }
+  .empty-state h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px; font-weight: 700; color: var(--cream);
+    margin-bottom: 8px;
+  }
+  .empty-state p { font-size: 14px; }
+
+  /* ── LOADING ── */
+  .loading-state {
+    text-align: center; padding: 60px 32px;
+    color: var(--cream-muted); font-size: 14px;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  .spinner {
+    width: 32px; height: 32px;
+    border: 3px solid rgba(201,168,76,0.2);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 16px;
+  }
+
+  /* ── AUTH GATE ── */
+  .auth-gate {
+    display: flex; align-items: center; justify-content: center;
+    min-height: 80vh; text-align: center;
+  }
+  .auth-card {
+    background: var(--navy-card);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-top: 3px solid var(--gold);
+    padding: 48px; max-width: 420px; width: 100%;
+  }
+  .auth-card img { width: 64px; height: 64px; margin-bottom: 24px; }
+  .auth-card h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 24px; font-weight: 700; color: var(--white);
+    margin-bottom: 12px;
+  }
+  .auth-card p { color: var(--cream-muted); font-size: 14px; margin-bottom: 32px; }
+  .auth-field {
+    width: 100%; margin-bottom: 12px;
+  }
+  .auth-field label {
+    display: block; font-size: 11px; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 4px; text-align: left;
+  }
+  .auth-field input {
+    width: 100%; padding: 12px 16px;
+    background: rgba(5,13,26,0.8);
+    border: 1px solid rgba(201,168,76,0.2);
+    color: var(--cream); font-size: 14px;
+    border-radius: 4px; outline: none;
+    font-family: 'Inter', sans-serif;
+  }
+  .auth-field input:focus { border-color: var(--gold); }
+  .auth-submit {
+    width: 100%; padding: 14px;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    color: var(--navy); border: none; border-radius: 4px;
+    font-weight: 800; font-size: 14px; letter-spacing: 1px;
+    text-transform: uppercase; cursor: pointer;
+    margin-top: 8px; transition: all 0.2s;
+  }
+  .auth-submit:hover { opacity: 0.85; }
+  .auth-error {
+    color: var(--red-alert); font-size: 13px;
+    margin-top: 12px; display: none;
+  }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed; bottom: 32px; right: 32px;
+    background: var(--navy-card);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-left: 3px solid var(--gold);
+    padding: 16px 24px;
+    border-radius: 4px;
+    font-size: 14px; color: var(--cream);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    z-index: 200;
+    transform: translateX(120%);
+    transition: transform 0.3s ease;
+  }
+  .toast.show { transform: translateX(0); }
+  .toast.success { border-left-color: var(--green-ok); }
+  .toast.error { border-left-color: var(--red-alert); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1000px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .admin-main { padding: 16px; }
+    .toolbar { flex-direction: column; align-items: stretch; }
+    .toolbar-left, .toolbar-right { flex-wrap: wrap; }
+    .search-input { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- AUTH GATE (simple password) -->
+<div id="auth-gate" class="auth-gate">
+  <div class="auth-card">
+    <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663471506516/vjCrzyxYmmFqZxuT.png" alt="LeadEdge AI">
+    <h2>Admin Dashboard</h2>
+    <p>Enter the admin password to access the waitlist management dashboard.</p>
+    <form id="auth-form">
+      <div class="auth-field">
+        <label for="admin-pass">Admin Password</label>
+        <input type="password" id="admin-pass" placeholder="Enter password" autocomplete="current-password">
+      </div>
+      <button type="submit" class="auth-submit">Access Dashboard</button>
+      <p class="auth-error" id="auth-error">Incorrect password. Please try again.</p>
+    </form>
+  </div>
+</div>
+
+<!-- DASHBOARD (hidden until auth) -->
+<div id="dashboard" style="display: none;">
+  <nav class="admin-nav">
+    <div class="admin-nav-left">
+      <a href="/landing" class="admin-nav-logo">
+        <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663471506516/vjCrzyxYmmFqZxuT.png" alt="LeadEdge AI">
+        <span>LeadEdge AI</span>
+      </a>
+      <span class="admin-badge">Admin</span>
+    </div>
+    <div class="admin-nav-right">
+      <a href="/landing" class="admin-nav-link">View Landing Page</a>
+      <a href="#" class="admin-nav-link active">Waitlist</a>
+      <a href="#" class="admin-nav-link" onclick="logout()">Logout</a>
+    </div>
+  </nav>
+
+  <main class="admin-main">
+    <!-- Stats -->
+    <div class="stats-grid" id="stats-grid">
+      <div class="stat-card">
+        <p class="stat-label">Total Signups</p>
+        <p class="stat-value" id="stat-total">0</p>
+      </div>
+      <div class="stat-card green">
+        <p class="stat-label">Contacted</p>
+        <p class="stat-value" id="stat-contacted">0</p>
+      </div>
+      <div class="stat-card blue">
+        <p class="stat-label">Converted</p>
+        <p class="stat-value" id="stat-converted">0</p>
+      </div>
+      <div class="stat-card purple">
+        <p class="stat-label">This Week</p>
+        <p class="stat-value" id="stat-week">0</p>
+      </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <h2>Waitlist Subscribers</h2>
+        <button class="filter-btn active" data-filter="all" onclick="setFilter('all', this)">All</button>
+        <button class="filter-btn" data-filter="pending" onclick="setFilter('pending', this)">Pending</button>
+        <button class="filter-btn" data-filter="contacted" onclick="setFilter('contacted', this)">Contacted</button>
+        <button class="filter-btn" data-filter="converted" onclick="setFilter('converted', this)">Converted</button>
+      </div>
+      <div class="toolbar-right">
+        <input type="text" class="search-input" placeholder="Search by name or email..." id="search-input" oninput="filterTable()">
+        <button class="export-btn" onclick="exportCSV()">Export CSV</button>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-container">
+      <div class="loading-state" id="loading-state">
+        <div class="spinner"></div>
+        <p>Loading waitlist data...</p>
+      </div>
+      <div class="empty-state" id="empty-state" style="display: none;">
+        <div class="icon">&#x1F4E5;</div>
+        <h3>No Signups Yet</h3>
+        <p>Share your landing page to start collecting waitlist signups.</p>
+      </div>
+      <table id="data-table" style="display: none;">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Email</th>
+            <th>Name</th>
+            <th>Agency</th>
+            <th>Phone</th>
+            <th>Plan</th>
+            <th>Status</th>
+            <th>Signed Up</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── Config ──
+const ADMIN_PASSWORD = 'leadedge2026';
+let allData = [];
+let currentFilter = 'all';
+
+// ── Auth ──
+function isAuthed() {
+  return sessionStorage.getItem('admin_auth') === 'true';
+}
+
+function showDashboard() {
+  document.getElementById('auth-gate').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  loadData();
+}
+
+document.getElementById('auth-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const pass = document.getElementById('admin-pass').value;
+  if (pass === ADMIN_PASSWORD) {
+    sessionStorage.setItem('admin_auth', 'true');
+    showDashboard();
+  } else {
+    document.getElementById('auth-error').style.display = 'block';
+  }
+});
+
+if (isAuthed()) showDashboard();
+
+function logout() {
+  sessionStorage.removeItem('admin_auth');
+  location.reload();
+}
+
+// ── Data loading ──
+async function loadData() {
+  try {
+    const res = await fetch('/api/waitlist/count');
+    const countData = await res.json();
+    
+    // Use REST endpoint for listing (no auth required for count, but for list we use a simple approach)
+    const listRes = await fetch('/api/waitlist/list');
+    if (listRes.ok) {
+      allData = await listRes.json();
+    } else {
+      allData = [];
+    }
+    
+    updateStats();
+    renderTable();
+  } catch (err) {
+    console.error('Load error:', err);
+    document.getElementById('loading-state').innerHTML = '<p style="color: var(--red-alert);">Failed to load data. Please refresh.</p>';
+  }
+}
+
+function updateStats() {
+  document.getElementById('stat-total').textContent = allData.length;
+  document.getElementById('stat-contacted').textContent = allData.filter(d => d.status === 'contacted').length;
+  document.getElementById('stat-converted').textContent = allData.filter(d => d.status === 'converted').length;
+  
+  const weekAgo = new Date();
+  weekAgo.setDate(weekAgo.getDate() - 7);
+  document.getElementById('stat-week').textContent = allData.filter(d => new Date(d.createdAt) > weekAgo).length;
+}
+
+function renderTable() {
+  const loading = document.getElementById('loading-state');
+  const empty = document.getElementById('empty-state');
+  const table = document.getElementById('data-table');
+  const tbody = document.getElementById('table-body');
+  const search = document.getElementById('search-input').value.toLowerCase();
+
+  loading.style.display = 'none';
+
+  let filtered = allData;
+  if (currentFilter !== 'all') {
+    filtered = filtered.filter(d => d.status === currentFilter);
+  }
+  if (search) {
+    filtered = filtered.filter(d =>
+      (d.email && d.email.toLowerCase().includes(search)) ||
+      (d.name && d.name.toLowerCase().includes(search)) ||
+      (d.agencyName && d.agencyName.toLowerCase().includes(search))
+    );
+  }
+
+  if (filtered.length === 0) {
+    table.style.display = 'none';
+    empty.style.display = 'block';
+    return;
+  }
+
+  empty.style.display = 'none';
+  table.style.display = 'table';
+
+  tbody.innerHTML = filtered.map((d, i) => {
+    const date = new Date(d.createdAt);
+    const dateStr = date.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
+    const timeStr = date.toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit' });
+    const planClass = d.plan ? `plan-${d.plan}` : 'plan-undecided';
+    const planLabel = d.plan ? d.plan.charAt(0).toUpperCase() + d.plan.slice(1) : 'Undecided';
+
+    return `<tr data-id="${d.id}">
+      <td style="color: var(--cream-muted); font-size: 12px;">${i + 1}</td>
+      <td class="email-cell">${escapeHtml(d.email)}</td>
+      <td class="name-cell">${escapeHtml(d.name || '—')}</td>
+      <td class="agency-cell">${escapeHtml(d.agencyName || '—')}</td>
+      <td class="phone-cell">${escapeHtml(d.phone || '—')}</td>
+      <td class="plan-cell ${planClass}">${planLabel}</td>
+      <td>
+        <div class="status-dropdown">
+          <span class="status-badge status-${d.status}" onclick="toggleStatusMenu(this)">${d.status}</span>
+          <div class="status-menu">
+            <button class="status-option" onclick="updateStatus(${d.id}, 'pending')">Pending</button>
+            <button class="status-option" onclick="updateStatus(${d.id}, 'contacted')">Contacted</button>
+            <button class="status-option" onclick="updateStatus(${d.id}, 'converted')">Converted</button>
+            <button class="status-option" onclick="updateStatus(${d.id}, 'unsubscribed')">Unsubscribed</button>
+          </div>
+        </div>
+      </td>
+      <td class="date-cell">${dateStr}<br>${timeStr}</td>
+      <td>
+        <button class="action-btn" onclick="copyEmail('${escapeHtml(d.email)}')" title="Copy email">Copy</button>
+        <button class="action-btn danger" onclick="deleteSignup(${d.id})" title="Delete">Delete</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+// ── Helpers ──
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function setFilter(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTable();
+}
+
+function filterTable() {
+  renderTable();
+}
+
+function toggleStatusMenu(el) {
+  // Close all other menus first
+  document.querySelectorAll('.status-menu.open').forEach(m => m.classList.remove('open'));
+  const menu = el.nextElementSibling;
+  menu.classList.toggle('open');
+}
+
+// Close menus on outside click
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.status-dropdown')) {
+    document.querySelectorAll('.status-menu.open').forEach(m => m.classList.remove('open'));
+  }
+});
+
+async function updateStatus(id, status) {
+  try {
+    const res = await fetch('/api/waitlist/update-status', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, status }),
+    });
+    if (res.ok) {
+      const item = allData.find(d => d.id === id);
+      if (item) item.status = status;
+      updateStats();
+      renderTable();
+      showToast('Status updated successfully', 'success');
+    } else {
+      showToast('Failed to update status', 'error');
+    }
+  } catch {
+    showToast('Network error', 'error');
+  }
+}
+
+async function deleteSignup(id) {
+  if (!confirm('Are you sure you want to delete this signup?')) return;
+  try {
+    const res = await fetch('/api/waitlist/delete', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id }),
+    });
+    if (res.ok) {
+      allData = allData.filter(d => d.id !== id);
+      updateStats();
+      renderTable();
+      showToast('Signup deleted', 'success');
+    } else {
+      showToast('Failed to delete', 'error');
+    }
+  } catch {
+    showToast('Network error', 'error');
+  }
+}
+
+function copyEmail(email) {
+  navigator.clipboard.writeText(email).then(() => {
+    showToast('Email copied to clipboard', 'success');
+  }).catch(() => {
+    showToast('Failed to copy', 'error');
+  });
+}
+
+function exportCSV() {
+  if (allData.length === 0) {
+    showToast('No data to export', 'error');
+    return;
+  }
+  const headers = ['Email', 'Name', 'Agency', 'Phone', 'Plan', 'Status', 'Source', 'Signed Up'];
+  const rows = allData.map(d => [
+    d.email,
+    d.name || '',
+    d.agencyName || '',
+    d.phone || '',
+    d.plan || '',
+    d.status,
+    d.source || '',
+    new Date(d.createdAt).toISOString(),
+  ]);
+  const csv = [headers, ...rows].map(r => r.map(c => `"${(c || '').replace(/"/g, '""')}"`).join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `leadedge-waitlist-${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('CSV exported successfully', 'success');
+}
+
+function showToast(message, type) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.className = `toast ${type} show`;
+  setTimeout(() => { toast.classList.remove('show'); }, 3000);
+}
+</script>
+</body>
+</html>

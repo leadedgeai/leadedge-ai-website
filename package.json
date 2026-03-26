@@ -1,0 +1,13 @@
+{
+  "name": "leadedge-ai-website",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'Static site — no build step needed'",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "mysql2": "^3.16.0"
+  }
+}
