@@ -530,7 +530,8 @@ async function loadData() {
     // Use REST endpoint for listing (no auth required for count, but for list we use a simple approach)
     const listRes = await fetch('/api/waitlist/list');
     if (listRes.ok) {
-      allData = await listRes.json();
+      const listJson = await listRes.json();
+      allData = listJson.signups || listJson || [];
     } else {
       allData = [];
     }
