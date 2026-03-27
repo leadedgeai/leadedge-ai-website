@@ -17,8 +17,9 @@ function getPool() {
       database: url.pathname.slice(1),
       ssl: { rejectUnauthorized: false },
       waitForConnections: true,
-      connectionLimit: 5,
+      connectionLimit: 3,
       queueLimit: 0,
+      connectTimeout: 10000,
     });
   }
   return pool;

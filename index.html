@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LeadEdge AI — The Operating System for Australian Real Estate Agents</title>
+<meta name="description" content="Respond to every lead in under 60 seconds. AI-powered lead response, listing generation, and CRM integration built exclusively for Australian real estate agents.">
+<link rel="icon" type="image/png" href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663471506516/vjCrzyxYmmFqZxuT.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #050D1A;
+    --navy-mid: #0A1628;
+    --navy-card: #0D1F38;
+    --steel: #1A3A5C;
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --gold-dim: #8B6914;
+    --cream: #F0E8D8;
+    --cream-muted: #A89880;
+    --red-alert: #E84040;
+    --green-ok: #2ECC71;
+    --white: #FFFFFF;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--navy);
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ── CANVAS BACKGROUND ── */
+  #bg-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* ── GRID OVERLAY ── */
+  .grid-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 2; }
+  section { position: relative; z-index: 2; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 0;
+    background: linear-gradient(180deg, rgba(5,13,26,0.95) 0%, rgba(5,13,26,0) 100%);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+  nav .nav-inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 32px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo img { width: 38px; height: 38px; object-fit: contain; }
+  .nav-logo span {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: 20px;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: 0.5px;
+  }
+  .nav-links { display: flex; align-items: center; gap: 36px; }
+  .nav-links a {
+    color: var(--cream-muted); text-decoration: none;
+    font-size: 14px; font-weight: 500; letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold-light); }
+  .nav-cta {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+    color: var(--navy) !important;
+    padding: 10px 24px; border-radius: 4px;
+    font-weight: 700 !important; font-size: 13px !important;
+    letter-spacing: 1px !important; text-transform: uppercase;
+    transition: opacity 0.2s !important;
+  }
+  .nav-cta:hover { opacity: 0.85 !important; color: var(--navy) !important; }
+
+  /* ── MOBILE NAV ── */
+  .mobile-menu-btn {
+    display: none;
+    background: none; border: none; cursor: pointer;
+    width: 32px; height: 32px;
+    flex-direction: column; justify-content: center; align-items: center; gap: 5px;
+  }
+  .mobile-menu-btn span {
+    display: block; width: 24px; height: 2px;
+    background: var(--gold); transition: all 0.3s;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 140px 0 100px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-spotlight {
+    position: absolute;
+    top: -200px; left: 50%; transform: translateX(-50%);
+    width: 900px; height: 900px;
+    background: radial-gradient(ellipse at center, rgba(201,168,76,0.12) 0%, rgba(201,168,76,0.04) 40%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-content { text-align: center; max-width: 900px; margin: 0 auto; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.25);
+    padding: 8px 20px; border-radius: 100px;
+    font-size: 12px; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--gold-light);
+    margin-bottom: 32px;
+  }
+  .hero-badge .pulse-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); display: inline-block; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  .hero-logo { width: 100px; height: 100px; object-fit: contain; margin: 0 auto 32px; display: block; filter: drop-shadow(0 0 40px rgba(201,168,76,0.5)); }
+
+  .hero h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 800; line-height: 1.0;
+    letter-spacing: -2px;
+    margin-bottom: 24px;
+  }
+  .hero h1 .gold-text {
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-dim) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero h1 .white-text { color: var(--white); }
+
+  .hero-sub {
+    font-size: clamp(16px, 2vw, 20px);
+    color: var(--cream-muted); max-width: 640px; margin: 0 auto 48px;
+    font-weight: 400; line-height: 1.7;
+  }
+
+  .hero-cta-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 72px; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    color: var(--navy); padding: 16px 40px; border-radius: 4px;
+    font-weight: 800; font-size: 15px; letter-spacing: 1px;
+    text-transform: uppercase; text-decoration: none;
+    border: none; cursor: pointer;
+    box-shadow: 0 0 40px rgba(201,168,76,0.3);
+    transition: all 0.2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 60px rgba(201,168,76,0.5); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--cream); padding: 16px 40px; border-radius: 4px;
+    font-weight: 600; font-size: 15px; letter-spacing: 0.5px;
+    text-decoration: none; border: 1px solid rgba(201,168,76,0.3);
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--gold); color: var(--gold-light); }
+
+  /* ── HERO STATS BAR ── */
+  .hero-stats {
+    display: flex; justify-content: center; gap: 0;
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 8px; overflow: hidden;
+    max-width: 700px; margin: 0 auto;
+    background: rgba(13,31,56,0.6); backdrop-filter: blur(10px);
+  }
+  .hero-stat {
+    flex: 1; padding: 24px 20px; text-align: center;
+    border-right: 1px solid rgba(201,168,76,0.1);
+  }
+  .hero-stat:last-child { border-right: none; }
+  .hero-stat-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 32px; font-weight: 800;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    display: block; margin-bottom: 4px;
+  }
+  .hero-stat-label { font-size: 11px; color: var(--cream-muted); letter-spacing: 1px; text-transform: uppercase; }
+
+  /* ── SECTION LABELS ── */
+  .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 16px; display: block;
+  }
+  .section-label::after {
+    content: ''; display: inline-block;
+    width: 40px; height: 1px; background: var(--gold);
+    margin-left: 12px; vertical-align: middle;
+  }
+
+  /* ── PROBLEM SECTION ── */
+  .problem-section { padding: 120px 0; }
+  .problem-section h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(36px, 5vw, 56px); font-weight: 800;
+    line-height: 1.1; margin-bottom: 20px; letter-spacing: -1px;
+  }
+  .problem-section .sub { color: var(--cream-muted); font-size: 18px; max-width: 600px; margin-bottom: 64px; }
+
+  .problem-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .problem-card {
+    background: var(--navy-card);
+    border-top: 3px solid var(--gold);
+    padding: 48px 36px;
+    position: relative; overflow: hidden;
+  }
+  .problem-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 120px;
+    background: linear-gradient(180deg, rgba(201,168,76,0.06) 0%, transparent 100%);
+  }
+  .problem-card.danger { border-top-color: var(--red-alert); }
+  .problem-card.danger::before { background: linear-gradient(180deg, rgba(232,64,64,0.08) 0%, transparent 100%); }
+  .problem-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(52px, 6vw, 72px); font-weight: 900;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1; margin-bottom: 12px; display: block;
+  }
+  .problem-card.danger .problem-num {
+    background: linear-gradient(135deg, #FF6B6B, var(--red-alert));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .problem-desc { font-size: 16px; color: var(--cream); font-weight: 600; margin-bottom: 8px; }
+  .problem-source { font-size: 11px; color: var(--cream-muted); letter-spacing: 0.5px; }
+
+  /* ── SOLUTION SECTION ── */
+  .solution-section { padding: 120px 0; background: linear-gradient(180deg, transparent 0%, rgba(10,22,40,0.8) 50%, transparent 100%); }
+  .solution-section h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(36px, 5vw, 56px); font-weight: 800;
+    line-height: 1.1; margin-bottom: 20px; letter-spacing: -1px;
+  }
+  .solution-section .sub { color: var(--cream-muted); font-size: 18px; max-width: 600px; margin-bottom: 64px; }
+
+  .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .feature-card {
+    background: var(--navy-card);
+    padding: 40px 32px;
+    border-left: 1px solid rgba(201,168,76,0.1);
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    position: relative; overflow: hidden;
+    transition: background 0.3s;
+  }
+  .feature-card:hover { background: rgba(26,58,92,0.5); }
+  .feature-icon {
+    width: 48px; height: 48px; border-radius: 8px;
+    background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.05));
+    border: 1px solid rgba(201,168,76,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; margin-bottom: 20px;
+  }
+  .feature-title { font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 10px; }
+  .feature-desc { font-size: 14px; color: var(--cream-muted); line-height: 1.6; }
+
+  /* ── SPEED SECTION ── */
+  .speed-section { padding: 120px 0; }
+  .speed-inner {
+    background: var(--navy-card);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-top: 3px solid var(--gold);
+    padding: 80px;
+    position: relative; overflow: hidden;
+  }
+  .speed-inner::before {
+    content: ''; position: absolute;
+    top: 0; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 300px;
+    background: radial-gradient(ellipse at top, rgba(201,168,76,0.1) 0%, transparent 70%);
+  }
+  .speed-inner h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(32px, 4vw, 48px); font-weight: 800;
+    text-align: center; margin-bottom: 16px; letter-spacing: -1px;
+  }
+  .speed-inner .sub { text-align: center; color: var(--cream-muted); font-size: 18px; margin-bottom: 64px; }
+  .speed-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .speed-stat {
+    text-align: center; padding: 40px 24px;
+    border-right: 1px solid rgba(201,168,76,0.1);
+  }
+  .speed-stat:last-child { border-right: none; }
+  .speed-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(48px, 6vw, 72px); font-weight: 900;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    display: block; line-height: 1; margin-bottom: 12px;
+  }
+  .speed-label { font-size: 16px; color: var(--cream); font-weight: 600; margin-bottom: 6px; }
+  .speed-sub { font-size: 12px; color: var(--cream-muted); }
+  .speed-source { text-align: center; margin-top: 48px; font-size: 12px; color: var(--cream-muted); letter-spacing: 0.5px; }
+
+  /* ── PRICING SECTION ── */
+  .pricing-section { padding: 120px 0; }
+  .pricing-section h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(36px, 5vw, 56px); font-weight: 800;
+    line-height: 1.1; margin-bottom: 20px; letter-spacing: -1px;
+  }
+  .pricing-section .sub { color: var(--cream-muted); font-size: 18px; max-width: 600px; margin-bottom: 64px; }
+
+  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .pricing-card {
+    background: var(--navy-card);
+    padding: 48px 36px;
+    border-top: 3px solid rgba(201,168,76,0.2);
+    position: relative;
+  }
+  .pricing-card.featured {
+    border-top-color: var(--gold);
+    background: rgba(26,58,92,0.4);
+    box-shadow: 0 0 60px rgba(201,168,76,0.1);
+  }
+  .pricing-badge {
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    color: var(--navy); padding: 4px 16px; border-radius: 100px;
+    font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .pricing-tier { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+  .pricing-price {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 56px; font-weight: 900; color: var(--white);
+    line-height: 1; margin-bottom: 4px;
+  }
+  .pricing-price span { font-size: 20px; color: var(--cream-muted); font-weight: 400; }
+  .pricing-desc { font-size: 14px; color: var(--cream-muted); margin-bottom: 32px; }
+  .pricing-divider { height: 1px; background: rgba(201,168,76,0.1); margin-bottom: 28px; }
+  .pricing-features { list-style: none; margin-bottom: 40px; }
+  .pricing-features li {
+    font-size: 14px; color: var(--cream); padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .pricing-features li::before { content: '\2713'; color: var(--gold); font-weight: 700; font-size: 13px; flex-shrink: 0; }
+  .pricing-btn {
+    display: block; width: 100%; padding: 14px;
+    text-align: center; text-decoration: none;
+    font-weight: 700; font-size: 13px; letter-spacing: 1px; text-transform: uppercase;
+    border-radius: 4px; transition: all 0.2s; cursor: pointer;
+  }
+  .pricing-btn-outline {
+    border: 1px solid rgba(201,168,76,0.3); color: var(--gold-light);
+    background: transparent;
+  }
+  .pricing-btn-outline:hover { border-color: var(--gold); background: rgba(201,168,76,0.05); }
+  .pricing-btn-gold {
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    color: var(--navy); border: none;
+    box-shadow: 0 0 30px rgba(201,168,76,0.3);
+  }
+  .pricing-btn-gold:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(201,168,76,0.5); }
+
+  .roi-banner {
+    margin-top: 48px;
+    background: rgba(201,168,76,0.06);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 28px 40px;
+    text-align: center;
+  }
+  .roi-banner p { font-size: 18px; color: var(--cream); }
+  .roi-banner strong { color: var(--gold-light); font-size: 22px; }
+
+  /* ── HOW IT WORKS ── */
+  .how-section { padding: 120px 0; background: linear-gradient(180deg, transparent 0%, rgba(10,22,40,0.6) 50%, transparent 100%); }
+  .how-section h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(36px, 5vw, 56px); font-weight: 800;
+    line-height: 1.1; margin-bottom: 20px; letter-spacing: -1px;
+  }
+  .how-section .sub { color: var(--cream-muted); font-size: 18px; max-width: 600px; margin-bottom: 64px; }
+
+  .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+  .step-card {
+    background: var(--navy-card);
+    padding: 40px 28px;
+    border-bottom: 3px solid rgba(201,168,76,0.15);
+    position: relative;
+  }
+  .step-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 64px; font-weight: 900;
+    color: rgba(201,168,76,0.08); line-height: 1;
+    position: absolute; top: 20px; right: 20px;
+  }
+  .step-icon { font-size: 28px; margin-bottom: 20px; display: block; }
+  .step-title { font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 10px; }
+  .step-desc { font-size: 14px; color: var(--cream-muted); line-height: 1.6; }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials-section { padding: 120px 0; }
+  .testimonials-section h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(36px, 5vw, 56px); font-weight: 800;
+    line-height: 1.1; margin-bottom: 20px; letter-spacing: -1px;
+  }
+  .testimonials-section .sub { color: var(--cream-muted); font-size: 18px; max-width: 600px; margin-bottom: 64px; }
+
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .testimonial-card {
+    background: var(--navy-card);
+    padding: 40px 32px;
+    border-left: 3px solid var(--gold);
+    position: relative;
+  }
+  .testimonial-quote {
+    font-size: 48px; color: rgba(201,168,76,0.2);
+    font-family: Georgia, serif; line-height: 1;
+    margin-bottom: 16px; display: block;
+  }
+  .testimonial-text { font-size: 16px; color: var(--cream); line-height: 1.7; margin-bottom: 28px; font-style: italic; }
+  .testimonial-author { display: flex; align-items: center; gap: 14px; }
+  .testimonial-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 16px; color: var(--navy); flex-shrink: 0;
+  }
+  .testimonial-name { font-weight: 700; font-size: 15px; color: var(--white); }
+  .testimonial-role { font-size: 12px; color: var(--cream-muted); }
+  .testimonial-stars { color: var(--gold); font-size: 13px; margin-bottom: 4px; }
+
+  /* ── CTA SECTION ── */
+  .cta-section {
+    padding: 140px 0;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .cta-spotlight {
+    position: absolute;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 800px; height: 600px;
+    background: radial-gradient(ellipse at center, rgba(201,168,76,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-section h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(40px, 6vw, 72px); font-weight: 900;
+    line-height: 1.0; margin-bottom: 24px; letter-spacing: -2px;
+  }
+  .cta-section .sub { color: var(--cream-muted); font-size: 20px; max-width: 560px; margin: 0 auto 48px; }
+  .cta-tagline {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(16px, 2vw, 20px);
+    color: var(--gold-light); letter-spacing: 2px;
+    text-transform: uppercase; font-weight: 600;
+    margin-top: 48px;
+  }
+
+  /* ── WAITLIST FORM ── */
+  .waitlist-form {
+    max-width: 560px; margin: 0 auto;
+    background: rgba(13,31,56,0.6);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 8px;
+    padding: 32px;
+    backdrop-filter: blur(10px);
+  }
+  .form-row { display: flex; gap: 12px; margin-bottom: 12px; }
+  .form-row.full { display: block; }
+  .form-field {
+    flex: 1;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .form-field label {
+    font-size: 11px; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--gold);
+  }
+  .form-field input, .form-field select {
+    padding: 12px 16px;
+    background: rgba(5,13,26,0.8);
+    border: 1px solid rgba(201,168,76,0.2);
+    color: var(--cream); font-size: 14px;
+    border-radius: 4px; outline: none;
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.2s;
+  }
+  .form-field input:focus, .form-field select:focus {
+    border-color: var(--gold);
+  }
+  .form-field input::placeholder { color: var(--cream-muted); }
+  .form-field select { cursor: pointer; }
+  .form-field select option { background: var(--navy-mid); color: var(--cream); }
+
+  .form-submit {
+    width: 100%; padding: 16px;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    color: var(--navy); border: none; border-radius: 4px;
+    font-weight: 800; font-size: 15px; letter-spacing: 1px;
+    text-transform: uppercase; cursor: pointer;
+    box-shadow: 0 0 40px rgba(201,168,76,0.3);
+    transition: all 0.2s;
+    margin-top: 8px;
+  }
+  .form-submit:hover { transform: translateY(-2px); box-shadow: 0 0 60px rgba(201,168,76,0.5); }
+  .form-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  .form-message {
+    margin-top: 16px; padding: 12px 16px;
+    border-radius: 4px; font-size: 14px; font-weight: 600;
+    text-align: center; display: none;
+  }
+  .form-message.success {
+    background: rgba(46,204,113,0.1);
+    border: 1px solid rgba(46,204,113,0.3);
+    color: var(--green-ok);
+  }
+  .form-message.error {
+    background: rgba(232,64,64,0.1);
+    border: 1px solid rgba(232,64,64,0.3);
+    color: var(--red-alert);
+  }
+
+  .waitlist-counter {
+    margin-top: 20px;
+    font-size: 13px; color: var(--cream-muted);
+    text-align: center;
+  }
+  .waitlist-counter strong { color: var(--gold-light); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid rgba(201,168,76,0.1);
+    padding: 60px 0 40px;
+    position: relative; z-index: 2;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 32px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 24px;
+  }
+  .footer-brand { display: flex; align-items: center; gap: 12px; }
+  .footer-brand img { width: 32px; height: 32px; object-fit: contain; }
+  .footer-brand span {
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 18px;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .footer-links { display: flex; gap: 32px; }
+  .footer-links a { color: var(--cream-muted); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold-light); }
+  .footer-legal { font-size: 12px; color: var(--cream-muted); margin-top: 32px; text-align: center; width: 100%; }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .problem-grid, .features-grid, .pricing-grid, .testimonials-grid { grid-template-columns: 1fr; }
+    .steps-grid { grid-template-columns: repeat(2, 1fr); }
+    .speed-stats { grid-template-columns: 1fr; }
+    .speed-stat { border-right: none; border-bottom: 1px solid rgba(201,168,76,0.1); }
+    .speed-inner { padding: 48px 32px; }
+    .nav-links { display: none; }
+    .mobile-menu-btn { display: flex; }
+    .hero-stats { flex-direction: column; }
+    .hero-stat { border-right: none; border-bottom: 1px solid rgba(201,168,76,0.1); }
+    .form-row { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+<div class="grid-overlay"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663471506516/vjCrzyxYmmFqZxuT.png" alt="LeadEdge AI Logo">
+      <span>LeadEdge AI</span>
+    </a>
+    <div class="nav-links">
+      <a href="#problem">The Problem</a>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#testimonials">Agents</a>
+      <a href="#cta" class="nav-cta">Get Early Access</a>
+    </div>
+    <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').style.display = document.querySelector('.nav-links').style.display === 'flex' ? 'none' : 'flex'">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-spotlight"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge"><span class="pulse-dot"></span>Now Accepting Early Access Applications</div>
+      <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663471506516/vjCrzyxYmmFqZxuT.png" alt="LeadEdge AI" class="hero-logo">
+      <h1>
+        <span class="white-text">The Operating System<br>for </span><span class="gold-text">Australian Real Estate</span>
+      </h1>
+      <p class="hero-sub">Respond to every lead in under 60 seconds. Score, nurture, and convert — while you sleep. Built exclusively for Australian agents.</p>
+      <div class="hero-cta-group">
+        <a href="#cta" class="btn-primary">Get Early Access</a>
+        <a href="#features" class="btn-secondary">See How It Works</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-num">60s</span>
+          <span class="hero-stat-label">AI Response Time</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">21x</span>
+          <span class="hero-stat-label">Higher Conversion</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">$2.07B</span>
+          <span class="hero-stat-label">Quarterly Commissions</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">45K+</span>
+          <span class="hero-stat-label">Agents in Australia</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem-section" id="problem">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">The Problem</span>
+      <h2>A $2 Billion Problem<br><span style="background: linear-gradient(135deg, #C9A84C, #8B6914); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Nobody Is Solving</span></h2>
+      <p class="sub">Hundreds of millions in lost commissions every year — not because agents are bad, but because they cannot respond fast enough.</p>
+    </div>
+    <div class="problem-grid reveal">
+      <div class="problem-card">
+        <span class="problem-num">$2.07B</span>
+        <p class="problem-desc">In quarterly commissions across Australia</p>
+        <p class="problem-source">Source: Suburbtrends, Feb 2026</p>
+      </div>
+      <div class="problem-card">
+        <span class="problem-num">15.3hrs</span>
+        <p class="problem-desc">Average agent lead response time</p>
+        <p class="problem-source">Source: Inman Research</p>
+      </div>
+      <div class="problem-card danger">
+        <span class="problem-num">65%</span>
+        <p class="problem-desc">Of leads lost before first contact</p>
+        <p class="problem-source">Source: MIT Lead Response Study</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPEED -->
+<section class="speed-section">
+  <div class="container">
+    <div class="speed-inner reveal">
+      <span class="section-label" style="display:block; text-align:center;">The Research</span>
+      <h2>Speed Wins.<br>The Data Proves It.</h2>
+      <p class="sub">Responding within 5 minutes isn't just better — it's a completely different game.</p>
+      <div class="speed-stats">
+        <div class="speed-stat">
+          <span class="speed-num">21x</span>
+          <p class="speed-label">More likely to qualify a lead</p>
+          <p class="speed-sub">when responding within 5 minutes</p>
+        </div>
+        <div class="speed-stat">
+          <span class="speed-num">400%</span>
+          <p class="speed-label">Higher conversion rate</p>
+          <p class="speed-sub">responding in under 1 minute</p>
+        </div>
+        <div class="speed-stat">
+          <span class="speed-num">78%</span>
+          <p class="speed-label">Of listings won</p>
+          <p class="speed-sub">by the first agent to respond</p>
+        </div>
+      </div>
+      <p class="speed-source">Source: MIT Lead Response Management Study &middot; InsideSales.com Research</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="solution-section" id="features">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">The Solution</span>
+      <h2>One App.<br><span style="background: linear-gradient(135deg, #C9A84C, #8B6914); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Infinite Commissions.</span></h2>
+      <p class="sub">Six AI-powered capabilities built exclusively for how Australian agents actually work.</p>
+    </div>
+    <div class="features-grid reveal">
+      <div class="feature-card">
+        <div class="feature-icon">&#x1F4AC;</div>
+        <h3 class="feature-title">AI Chat Assistant</h3>
+        <p class="feature-desc">Responds to every new lead enquiry in under 60 seconds, 24/7. Trained on Australian real estate language, property law, and negotiation patterns.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#x1F4DD;</div>
+        <h3 class="feature-title">AI Listing Generator</h3>
+        <p class="feature-desc">Creates professional property descriptions for realestate.com.au, Domain, Facebook, and email in a single tap. Never stare at a blank page again.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#x1F525;</div>
+        <h3 class="feature-title">Smart Lead Scoring</h3>
+        <p class="feature-desc">Automatically ranks every lead as Hot, Warm, or Cold so you always know exactly who to call first. Stop wasting time on tyre-kickers.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#x23F0;</div>
+        <h3 class="feature-title">Follow-Up Automation</h3>
+        <p class="feature-desc">Sends personalised follow-up messages to leads over days and weeks without you lifting a finger. Your pipeline never goes cold again.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#x1F4CA;</div>
+        <h3 class="feature-title">Performance Dashboard</h3>
+        <p class="feature-desc">Real-time analytics showing response rate, conversion metrics, estimated revenue, and AI performance. Know your numbers at a glance.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#x1F517;</div>
+        <h3 class="feature-title">CRM Integration</h3>
+        <p class="feature-desc">Connects directly with Rex, Agentbox, and other major Australian CRMs. Leads flow in automatically — no double entry, no missed enquiries.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">How It Works</span>
+      <h2>Up and Running<br><span style="background: linear-gradient(135deg, #C9A84C, #8B6914); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">in 4 Steps</span></h2>
+      <p class="sub">From sign-up to your first AI-handled lead in under 10 minutes.</p>
+    </div>
+    <div class="steps-grid reveal">
+      <div class="step-card">
+        <span class="step-num">01</span>
+        <span class="step-icon">&#x1F4F1;</span>
+        <h3 class="step-title">Download the App</h3>
+        <p class="step-desc">Available on iOS. Install in seconds, create your account, and you're in.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">02</span>
+        <span class="step-icon">&#x1F517;</span>
+        <h3 class="step-title">Connect Your CRM</h3>
+        <p class="step-desc">Link Rex, Agentbox, or your existing system. Leads start flowing in automatically.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">03</span>
+        <span class="step-icon">&#x1F916;</span>
+        <h3 class="step-title">Train Your AI</h3>
+        <p class="step-desc">Set your tone, response style, and preferences. Your AI learns how you work.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">04</span>
+        <span class="step-icon">&#x1F4B0;</span>
+        <h3 class="step-title">Close More Deals</h3>
+        <p class="step-desc">Every lead gets a 60-second response. You focus on inspections and negotiations.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">Pricing</span>
+      <h2>One Commission Pays<br><span style="background: linear-gradient(135deg, #C9A84C, #8B6914); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">for a Full Year</span></h2>
+      <p class="sub">Simple, transparent pricing. No lock-in contracts. Cancel anytime.</p>
+    </div>
+    <div class="pricing-grid reveal">
+      <div class="pricing-card">
+        <p class="pricing-tier">Starter</p>
+        <p class="pricing-price">$149<span>/mo</span></p>
+        <p class="pricing-desc">For solo agents getting started</p>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>50 active leads</li>
+          <li>AI Chat Assistant</li>
+          <li>Smart Lead Scoring</li>
+          <li>1 CRM integration</li>
+          <li>Performance Dashboard</li>
+        </ul>
+        <a href="#cta" class="pricing-btn pricing-btn-outline">Get Started</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-badge">Most Popular</div>
+        <p class="pricing-tier">Professional</p>
+        <p class="pricing-price">$299<span>/mo</span></p>
+        <p class="pricing-desc">For serious agents who want it all</p>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>Unlimited leads</li>
+          <li>AI Chat + Listing Generator</li>
+          <li>Smart Lead Scoring</li>
+          <li>Follow-Up Automation</li>
+          <li>All CRM integrations</li>
+          <li>Priority support</li>
+        </ul>
+        <a href="#cta" class="pricing-btn pricing-btn-gold">Get Started</a>
+      </div>
+      <div class="pricing-card">
+        <p class="pricing-tier">Agency</p>
+        <p class="pricing-price">$799<span>/mo</span></p>
+        <p class="pricing-desc">For teams and agencies</p>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>Everything in Professional</li>
+          <li>10 agent seats</li>
+          <li>Team analytics dashboard</li>
+          <li>Custom AI training</li>
+          <li>Dedicated account manager</li>
+        </ul>
+        <a href="#cta" class="pricing-btn pricing-btn-outline">Get Started</a>
+      </div>
+    </div>
+    <div class="roi-banner reveal">
+      <p>At $299/mo — one average Australian commission of $18,350 pays for the subscription <strong>MORE THAN 5 TIMES OVER</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section" id="testimonials">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">Early Agents</span>
+      <h2>Agents Are Already<br><span style="background: linear-gradient(135deg, #C9A84C, #8B6914); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Winning</span></h2>
+      <p class="sub">Hear from the agents who got early access and never looked back.</p>
+    </div>
+    <div class="testimonials-grid reveal">
+      <div class="testimonial-card">
+        <span class="testimonial-quote">&ldquo;</span>
+        <p class="testimonial-text">I used to lose leads every weekend. Now my AI responds within a minute while I'm at my kids' footy game. Booked three inspections last Saturday without touching my phone.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">SM</div>
+          <div>
+            <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testimonial-name">Sarah Mitchell</p>
+            <p class="testimonial-role">Principal Agent &middot; Sydney, NSW</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <span class="testimonial-quote">&ldquo;</span>
+        <p class="testimonial-text">The listing generator alone saves me two hours a week. The AI writes better copy than I do. My realestate.com.au listings are getting 40% more enquiries since I started using it.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">JC</div>
+          <div>
+            <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testimonial-name">James Chen</p>
+            <p class="testimonial-role">Senior Agent &middot; Melbourne, VIC</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <span class="testimonial-quote">&ldquo;</span>
+        <p class="testimonial-text">Our agency went from a 6-hour average response time to under 90 seconds. We've won four listings this quarter that we know went to us because we responded first. ROI is insane.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">RB</div>
+          <div>
+            <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testimonial-name">Rachel Brooks</p>
+            <p class="testimonial-role">Agency Director &middot; Brisbane, QLD</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / WAITLIST -->
+<section class="cta-section" id="cta">
+  <div class="cta-spotlight"></div>
+  <div class="container">
+    <div class="reveal">
+      <h2><span style="background: linear-gradient(135deg, #E8C96A, #C9A84C); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Stop Losing Leads.</span><br>Start Closing Deals.</h2>
+      <p class="sub">Join the waitlist for early access. First 100 agents get 3 months free.</p>
+
+      <form class="waitlist-form" id="waitlist-form">
+        <div class="form-row">
+          <div class="form-field">
+            <label for="wl-name">Full Name</label>
+            <input type="text" id="wl-name" placeholder="Sarah Mitchell" autocomplete="name">
+          </div>
+          <div class="form-field">
+            <label for="wl-email">Email Address *</label>
+            <input type="email" id="wl-email" placeholder="sarah@agency.com.au" required autocomplete="email">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="wl-agency">Agency Name</label>
+            <input type="text" id="wl-agency" placeholder="Mitchell Real Estate" autocomplete="organization">
+          </div>
+          <div class="form-field">
+            <label for="wl-phone">Phone</label>
+            <input type="tel" id="wl-phone" placeholder="0412 345 678" autocomplete="tel">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="wl-plan">Interested Plan</label>
+            <select id="wl-plan">
+              <option value="">Select a plan...</option>
+              <option value="starter">Starter — $149/mo</option>
+              <option value="professional">Professional — $299/mo</option>
+              <option value="agency">Agency — $799/mo</option>
+              <option value="undecided">Not sure yet</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="form-submit" id="submit-btn">Join the Waitlist</button>
+        <div class="form-message" id="form-message"></div>
+        <div class="waitlist-counter" id="waitlist-counter"></div>
+      </form>
+
+      <p class="cta-tagline">One Integration. One App. Infinite Commissions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663471506516/vjCrzyxYmmFqZxuT.png" alt="LeadEdge AI">
+      <span>LeadEdge AI</span>
+    </div>
+    <div class="footer-links">
+      <a href="mailto:hello@leadedgeai.com.au">hello@leadedgeai.com.au</a>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#cta">Early Access</a>
+    </div>
+  </div>
+  <p class="footer-legal">&copy; 2026 LeadEdge AI. Trading as LeadEdge AI (ABN: Pending Registration). All rights reserved. Built for Australian real estate agents.</p>
+</footer>
+
+<script>
+// ── Particle canvas background ──
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+function createParticle() {
+  return {
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    size: Math.random() * 1.5 + 0.3,
+    speedX: (Math.random() - 0.5) * 0.3,
+    speedY: (Math.random() - 0.5) * 0.3,
+    opacity: Math.random() * 0.4 + 0.1
+  };
+}
+
+for (let i = 0; i < 120; i++) particles.push(createParticle());
+
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => {
+    p.x += p.speedX; p.y += p.speedY;
+    if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
+    if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(201, 168, 76, ${p.opacity})`;
+    ctx.fill();
+  });
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+// ── Scroll reveal ──
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.1 });
+reveals.forEach(r => observer.observe(r));
+
+// ── Waitlist counter ──
+async function loadWaitlistCount() {
+  try {
+    const res = await fetch('/api/waitlist/count');
+    const data = await res.json();
+    const counter = document.getElementById('waitlist-counter');
+    if (data.count > 0) {
+      counter.innerHTML = `<strong>${data.count}</strong> agent${data.count !== 1 ? 's' : ''} already on the waitlist`;
+    }
+  } catch (e) { /* silent */ }
+}
+loadWaitlistCount();
+
+// ── Waitlist form submission ──
+document.getElementById('waitlist-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submit-btn');
+  const msg = document.getElementById('form-message');
+  
+  btn.disabled = true;
+  btn.textContent = 'Joining...';
+  msg.style.display = 'none';
+
+  const payload = {
+    email: document.getElementById('wl-email').value.trim(),
+    name: document.getElementById('wl-name').value.trim() || undefined,
+    agencyName: document.getElementById('wl-agency').value.trim() || undefined,
+    phone: document.getElementById('wl-phone').value.trim() || undefined,
+    plan: document.getElementById('wl-plan').value || undefined,
+    source: 'website',
+  };
+
+  try {
+    const res = await fetch('/api/waitlist/join', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      msg.className = 'form-message success';
+      msg.textContent = data.alreadyExists
+        ? "You're already on the waitlist! We'll be in touch soon."
+        : "Welcome aboard! You're on the waitlist. We'll be in touch soon.";
+      msg.style.display = 'block';
+      if (!data.alreadyExists) {
+        document.getElementById('waitlist-form').reset();
+        loadWaitlistCount();
+      }
+    } else {
+      msg.className = 'form-message error';
+      msg.textContent = data.message || 'Something went wrong. Please try again.';
+      msg.style.display = 'block';
+    }
+  } catch (err) {
+    msg.className = 'form-message error';
+    msg.textContent = 'Network error. Please check your connection and try again.';
+    msg.style.display = 'block';
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Join the Waitlist';
+});
+</script>
+</body>
+</html>

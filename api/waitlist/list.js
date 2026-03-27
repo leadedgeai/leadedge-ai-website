@@ -13,7 +13,7 @@ module.exports = async function handler(req, res) {
     const [rows] = await db.execute("SELECT * FROM waitlist_signups ORDER BY createdAt DESC");
     return res.json({ signups: rows });
   } catch (err) {
-    console.error("Waitlist list error:", err);
-    return res.status(500).json({ signups: [], message: "Server error" });
+    console.error("Waitlist list error:", err.message);
+    return res.status(500).json({ signups: [], message: err.message });
   }
 };

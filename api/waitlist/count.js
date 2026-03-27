@@ -13,7 +13,7 @@ module.exports = async function handler(req, res) {
     const [rows] = await db.execute("SELECT COUNT(*) as count FROM waitlist_signups");
     return res.json({ count: rows[0].count });
   } catch (err) {
-    console.error("Waitlist count error:", err);
-    return res.json({ count: 0 });
+    console.error("Waitlist count error:", err.message);
+    return res.status(500).json({ count: 0, message: err.message });
   }
 };
