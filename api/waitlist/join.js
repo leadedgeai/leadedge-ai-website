@@ -42,7 +42,7 @@ module.exports = async function handler(req, res) {
 
         // 1. Admin notification email
         await resend.emails.send({
-          from: "LeadEdge AI <onboarding@resend.dev>",
+          from: "LeadEdge AI <hello@leadedgeai.com.au>",
           to: ["hello@leadedgeai.com.au"],
           subject: `\uD83D\uDD25 New Waitlist Signup \u2014 ${displayName}`,
           html: `
@@ -70,7 +70,7 @@ module.exports = async function handler(req, res) {
 
         // 2. User confirmation email
         await resend.emails.send({
-          from: "LeadEdge AI <onboarding@resend.dev>",
+          from: "LeadEdge AI <hello@leadedgeai.com.au>",
           to: [email.toLowerCase().trim()],
           subject: "You're on the LeadEdge AI waitlist \uD83C\uDF89",
           html: `
