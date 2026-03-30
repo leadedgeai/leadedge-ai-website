@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service — LeadEdge AI</title>
+<meta name="description" content="Terms of Service for LeadEdge AI — the AI-powered CRM for Australian real estate agents.">
+<link rel="icon" type="image/png" href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663471506516/vjCrzyxYmmFqZxuT.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #050D1A;
+    --navy-mid: #0A1628;
+    --navy-card: #0D1F38;
+    --steel: #1A3A5C;
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --gold-dim: #8B6914;
+    --cream: #F0E8D8;
+    --cream-muted: #A89880;
+    --white: #FFFFFF;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--navy);
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.8;
+  }
+
+  .grid-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 0;
+    background: linear-gradient(180deg, rgba(5,13,26,0.95) 0%, rgba(5,13,26,0) 100%);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+  nav .nav-inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 32px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo img { width: 38px; height: 38px; object-fit: contain; }
+  .nav-logo span {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: 20px;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: 0.5px;
+  }
+  .nav-links { display: flex; align-items: center; gap: 36px; }
+  .nav-links a {
+    color: var(--cream-muted); text-decoration: none;
+    font-size: 14px; font-weight: 500; letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold-light); }
+  .nav-cta {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+    color: var(--navy) !important;
+    padding: 10px 24px; border-radius: 4px;
+    font-weight: 700 !important; font-size: 13px !important;
+    letter-spacing: 1px !important; text-transform: uppercase;
+    transition: opacity 0.2s !important;
+  }
+  .nav-cta:hover { opacity: 0.85 !important; color: var(--navy) !important; }
+
+  .mobile-menu-btn {
+    display: none;
+    background: none; border: none; cursor: pointer;
+    width: 32px; height: 32px;
+    flex-direction: column; justify-content: center; align-items: center; gap: 5px;
+  }
+  .mobile-menu-btn span {
+    display: block; width: 24px; height: 2px;
+    background: var(--gold); transition: all 0.3s;
+  }
+
+  .policy-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 140px 32px 80px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .policy-header {
+    margin-bottom: 48px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--steel);
+  }
+
+  .policy-header h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+  }
+
+  .policy-header .effective-date {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--cream-muted);
+    letter-spacing: 0.5px;
+  }
+
+  .policy-section {
+    margin-bottom: 40px;
+  }
+
+  .policy-section h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .policy-section p {
+    font-size: 15px;
+    color: var(--cream-muted);
+    line-height: 1.8;
+    margin-bottom: 14px;
+  }
+
+  .policy-list {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0;
+  }
+
+  .policy-list li {
+    font-size: 14px;
+    color: var(--cream-muted);
+    padding: 6px 0 6px 20px;
+    position: relative;
+  }
+
+  .policy-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 14px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  footer {
+    border-top: 1px solid var(--steel);
+    padding: 40px 32px;
+    position: relative;
+    z-index: 2;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 20px;
+  }
+  .footer-brand { display: flex; align-items: center; gap: 12px; }
+  .footer-brand img { width: 32px; height: 32px; object-fit: contain; }
+  .footer-brand span {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: 16px; color: var(--gold);
+  }
+  .footer-links { display: flex; gap: 32px; }
+  .footer-links a { color: var(--cream-muted); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold-light); }
+  .footer-legal { font-size: 12px; color: var(--cream-muted); margin-top: 32px; text-align: center; width: 100%; }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; position: absolute; top: 70px; left: 0; right: 0; background: var(--navy); flex-direction: column; padding: 20px 32px; gap: 16px; border-bottom: 1px solid var(--steel); }
+    .mobile-menu-btn { display: flex; }
+    .policy-header h1 { font-size: 30px; }
+    .policy-container { padding: 120px 20px 60px; }
+    .footer-inner { flex-direction: column; text-align: center; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-overlay"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663471506516/vjCrzyxYmmFqZxuT.png" alt="LeadEdge AI Logo">
+      <span>LeadEdge AI</span>
+    </a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms of Service</a>
+      <a href="/" class="nav-cta">Get Early Access</a>
+    </div>
+    <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').style.display = document.querySelector('.nav-links').style.display === 'flex' ? 'none' : 'flex'">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- TERMS OF SERVICE CONTENT -->
+<div class="policy-container">
+  <div class="policy-header">
+    <h1>Terms of Service</h1>
+    <p class="effective-date">Effective Date: March 30, 2026</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>1. Acceptance of Terms</h2>
+    <p>By downloading, installing, or using LeadEdge AI ("the App"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, do not use the App.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>2. Description of Service</h2>
+    <p>LeadEdge AI is a mobile application that provides real estate professionals with tools for lead management, conversation tracking, property listing management, appointment scheduling, follow-up templates, and a digital business card with QR code functionality.</p>
+    <p>The App stores all user data locally on the device and does not require an account or internet connection for core functionality.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>3. Eligibility</h2>
+    <p>The App is intended for use by real estate professionals and business users who are at least 18 years of age. By using the App, you represent that you meet this requirement.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>4. User Responsibilities</h2>
+    <p>As a user of LeadEdge AI, you agree to:</p>
+    <ul class="policy-list">
+      <li>Use the App only for lawful purposes and in accordance with applicable laws and regulations</li>
+      <li>Ensure that any personal data you enter about clients or leads has been collected in compliance with applicable privacy and data protection laws</li>
+      <li>Maintain the security of your device, including using a passcode or biometric lock</li>
+      <li>Take responsibility for backing up your data, as all information is stored locally on your device</li>
+      <li>Not reverse-engineer, decompile, or attempt to extract the source code of the App</li>
+    </ul>
+  </div>
+
+  <div class="policy-section">
+    <h2>5. Data and Privacy</h2>
+    <p>Your use of the App is also governed by our <a href="/privacy.html" style="color: var(--gold); text-decoration: none;">Privacy Policy</a>, which describes how data is handled within the App. All data is stored locally on your device. We do not collect, transmit, or store your data on external servers.</p>
+    <p>You are solely responsible for the accuracy and legality of the data you enter into the App, including client contact information and property details.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>6. Intellectual Property</h2>
+    <p>All content, design, code, and branding associated with LeadEdge AI are the intellectual property of LeadEdge AI and its licensors. You are granted a limited, non-exclusive, non-transferable license to use the App for its intended purpose.</p>
+    <p>You may not reproduce, distribute, modify, or create derivative works based on the App without prior written consent.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>7. Disclaimer of Warranties</h2>
+    <p>LeadEdge AI is provided on an "as is" and "as available" basis. To the fullest extent permitted by law, we disclaim all warranties, express or implied, including but not limited to:</p>
+    <ul class="policy-list">
+      <li>Warranties of merchantability and fitness for a particular purpose</li>
+      <li>Warranties that the App will be uninterrupted, error-free, or free of harmful components</li>
+      <li>Warranties regarding the accuracy or reliability of any information obtained through the App</li>
+    </ul>
+  </div>
+
+  <div class="policy-section">
+    <h2>8. Limitation of Liability</h2>
+    <p>To the maximum extent permitted by applicable law, LeadEdge AI and its developers shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the App, including but not limited to:</p>
+    <ul class="policy-list">
+      <li>Loss of data stored on your device</li>
+      <li>Loss of business or revenue</li>
+      <li>Errors in lead scoring or dashboard statistics</li>
+      <li>Inability to access the App due to device issues</li>
+    </ul>
+  </div>
+
+  <div class="policy-section">
+    <h2>9. Indemnification</h2>
+    <p>You agree to indemnify and hold harmless LeadEdge AI and its developers from any claims, damages, losses, or expenses (including legal fees) arising from your use of the App or violation of these Terms.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>10. Modifications</h2>
+    <p>We reserve the right to modify, update, or discontinue the App at any time without prior notice. We may also update these Terms from time to time. Continued use of the App after changes to the Terms constitutes acceptance of the revised Terms.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>11. Termination</h2>
+    <p>You may stop using the App at any time by uninstalling it from your device. We reserve the right to terminate or restrict access to the App if you violate these Terms.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>12. Governing Law</h2>
+    <p>These Terms shall be governed by and construed in accordance with the laws of Australia, without regard to its conflict of law provisions.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>13. Contact Us</h2>
+    <p>If you have any questions about these Terms, please contact us at:</p>
+    <p><strong>Email:</strong> <a href="mailto:support@leadedgeai.com.au" style="color: var(--gold); text-decoration: none;">support@leadedgeai.com.au</a></p>
+    <p><strong>Website:</strong> <a href="https://www.leadedgeai.com.au" style="color: var(--gold); text-decoration: none;">www.leadedgeai.com.au</a></p>
+  </div>
+
+  <p style="font-size: 13px; color: var(--cream-muted); text-align: center; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--steel);">These terms of service were last updated on March 30, 2026.</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663471506516/vjCrzyxYmmFqZxuT.png" alt="LeadEdge AI">
+      <span>LeadEdge AI</span>
+    </div>
+    <div class="footer-links">
+      <a href="mailto:hello@leadedgeai.com.au">hello@leadedgeai.com.au</a>
+      <a href="/">Home</a>
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms of Service</a>
+    </div>
+  </div>
+  <p class="footer-legal">&copy; 2026 LeadEdge AI. Trading as LeadEdge AI (ABN: Pending Registration). All rights reserved. Built for Australian real estate agents.</p>
+</footer>
+
+</body>
+</html>

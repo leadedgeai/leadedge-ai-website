@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — LeadEdge AI</title>
+<meta name="description" content="Privacy Policy for LeadEdge AI — the AI-powered CRM for Australian real estate agents.">
+<link rel="icon" type="image/png" href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663471506516/vjCrzyxYmmFqZxuT.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #050D1A;
+    --navy-mid: #0A1628;
+    --navy-card: #0D1F38;
+    --steel: #1A3A5C;
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --gold-dim: #8B6914;
+    --cream: #F0E8D8;
+    --cream-muted: #A89880;
+    --white: #FFFFFF;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--navy);
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.8;
+  }
+
+  /* ── GRID OVERLAY ── */
+  .grid-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 0;
+    background: linear-gradient(180deg, rgba(5,13,26,0.95) 0%, rgba(5,13,26,0) 100%);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+  nav .nav-inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 32px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo img { width: 38px; height: 38px; object-fit: contain; }
+  .nav-logo span {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: 20px;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: 0.5px;
+  }
+  .nav-links { display: flex; align-items: center; gap: 36px; }
+  .nav-links a {
+    color: var(--cream-muted); text-decoration: none;
+    font-size: 14px; font-weight: 500; letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold-light); }
+  .nav-cta {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+    color: var(--navy) !important;
+    padding: 10px 24px; border-radius: 4px;
+    font-weight: 700 !important; font-size: 13px !important;
+    letter-spacing: 1px !important; text-transform: uppercase;
+    transition: opacity 0.2s !important;
+  }
+  .nav-cta:hover { opacity: 0.85 !important; color: var(--navy) !important; }
+
+  /* ── MOBILE NAV ── */
+  .mobile-menu-btn {
+    display: none;
+    background: none; border: none; cursor: pointer;
+    width: 32px; height: 32px;
+    flex-direction: column; justify-content: center; align-items: center; gap: 5px;
+  }
+  .mobile-menu-btn span {
+    display: block; width: 24px; height: 2px;
+    background: var(--gold); transition: all 0.3s;
+  }
+
+  /* ── CONTENT ── */
+  .policy-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 140px 32px 80px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .policy-header {
+    margin-bottom: 48px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--steel);
+  }
+
+  .policy-header h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+  }
+
+  .policy-header .effective-date {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--cream-muted);
+    letter-spacing: 0.5px;
+  }
+
+  .policy-section {
+    margin-bottom: 40px;
+  }
+
+  .policy-section h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .policy-section h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 10px;
+    margin-top: 20px;
+  }
+
+  .policy-section p {
+    font-size: 15px;
+    color: var(--cream-muted);
+    line-height: 1.8;
+    margin-bottom: 14px;
+  }
+
+  .policy-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 20px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .policy-table th {
+    background: var(--navy-card);
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: 700;
+    text-align: left;
+    padding: 12px 16px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--steel);
+  }
+
+  .policy-table td {
+    background: rgba(13,31,56,0.5);
+    color: var(--cream-muted);
+    font-size: 14px;
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(26,58,92,0.5);
+  }
+
+  .policy-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .policy-list {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0;
+  }
+
+  .policy-list li {
+    font-size: 14px;
+    color: var(--cream-muted);
+    padding: 6px 0 6px 20px;
+    position: relative;
+  }
+
+  .policy-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 14px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--steel);
+    padding: 40px 32px;
+    position: relative;
+    z-index: 2;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 20px;
+  }
+  .footer-brand { display: flex; align-items: center; gap: 12px; }
+  .footer-brand img { width: 32px; height: 32px; object-fit: contain; }
+  .footer-brand span {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: 16px; color: var(--gold);
+  }
+  .footer-links { display: flex; gap: 32px; }
+  .footer-links a { color: var(--cream-muted); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold-light); }
+  .footer-legal { font-size: 12px; color: var(--cream-muted); margin-top: 32px; text-align: center; width: 100%; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; position: absolute; top: 70px; left: 0; right: 0; background: var(--navy); flex-direction: column; padding: 20px 32px; gap: 16px; border-bottom: 1px solid var(--steel); }
+    .mobile-menu-btn { display: flex; }
+    .policy-header h1 { font-size: 30px; }
+    .policy-container { padding: 120px 20px 60px; }
+    .footer-inner { flex-direction: column; text-align: center; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-overlay"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663471506516/vjCrzyxYmmFqZxuT.png" alt="LeadEdge AI Logo">
+      <span>LeadEdge AI</span>
+    </a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms of Service</a>
+      <a href="/" class="nav-cta">Get Early Access</a>
+    </div>
+    <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').style.display = document.querySelector('.nav-links').style.display === 'flex' ? 'none' : 'flex'">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- PRIVACY POLICY CONTENT -->
+<div class="policy-container">
+  <div class="policy-header">
+    <h1>Privacy Policy</h1>
+    <p class="effective-date">Effective Date: March 30, 2026</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>1. Introduction</h2>
+    <p>LeadEdge AI ("we", "our", or "the App") is a mobile application designed for real estate professionals to manage leads, conversations, listings, and appointments. We are committed to protecting your privacy and being transparent about how we handle your information.</p>
+    <p>This Privacy Policy explains what data the App collects, how it is used, and your rights regarding that data.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>2. Information We Collect</h2>
+
+    <h3>2.1 Data You Provide</h3>
+    <p>When you use LeadEdge AI, you may enter the following types of information:</p>
+    <table class="policy-table">
+      <thead>
+        <tr>
+          <th>Data Type</th>
+          <th>Examples</th>
+          <th>Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Agent profile information</td>
+          <td>Name, title, phone, email, agency, license number</td>
+          <td>Displayed on your digital business card and QR code</td>
+        </tr>
+        <tr>
+          <td>Lead information</td>
+          <td>Client names, phone numbers, emails, property interests, notes</td>
+          <td>Lead tracking and management</td>
+        </tr>
+        <tr>
+          <td>Listing details</td>
+          <td>Property addresses, prices, descriptions, photos</td>
+          <td>Listing management</td>
+        </tr>
+        <tr>
+          <td>Appointment details</td>
+          <td>Dates, times, client names, locations</td>
+          <td>Scheduling and calendar integration</td>
+        </tr>
+        <tr>
+          <td>Conversation records</td>
+          <td>Messages, follow-up templates</td>
+          <td>Client communication management</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>2.2 Data Stored Locally</h3>
+    <p>All data entered into LeadEdge AI is stored <strong>locally on your device</strong> using on-device storage (AsyncStorage). This means your data stays on your phone and is not transmitted to external servers unless you explicitly choose to share it (for example, by sharing your QR code or using the share function).</p>
+
+    <h3>2.3 Data We Do Not Collect</h3>
+    <p>We do not collect, store, or transmit the following:</p>
+    <ul class="policy-list">
+      <li>Personal data to external servers or cloud databases</li>
+      <li>Analytics or tracking data</li>
+      <li>Location data</li>
+      <li>Advertising identifiers</li>
+      <li>Browsing history</li>
+      <li>Data from other apps on your device</li>
+    </ul>
+  </div>
+
+  <div class="policy-section">
+    <h2>3. How We Use Your Information</h2>
+    <p>The information you enter into LeadEdge AI is used solely to provide the app's core functionality:</p>
+    <ul class="policy-list">
+      <li>Displaying your agent profile and digital business card</li>
+      <li>Managing and organising your leads, listings, and appointments</li>
+      <li>Generating QR codes containing your contact information (vCard format)</li>
+      <li>Providing follow-up message templates</li>
+      <li>Showing dashboard statistics based on your local data</li>
+    </ul>
+  </div>
+
+  <div class="policy-section">
+    <h2>4. Data Sharing</h2>
+    <p>LeadEdge AI does not share your data with third parties. Your data remains on your device at all times.</p>
+    <p>The only circumstances under which your information may leave your device are:</p>
+    <ul class="policy-list">
+      <li><strong>QR Code Sharing:</strong> When you display your QR code, anyone who scans it will receive your agent contact details in vCard format. You control when and to whom you show this code.</li>
+      <li><strong>Share Functions:</strong> When you use the built-in share function (e.g., sharing contact details via text or email), the data is shared through your device's native sharing capabilities.</li>
+      <li><strong>Calendar Integration:</strong> When you add an appointment to your device calendar, the appointment details are stored in your device's calendar app.</li>
+    </ul>
+  </div>
+
+  <div class="policy-section">
+    <h2>5. Data Security</h2>
+    <p>Since all data is stored locally on your device, its security is governed by your device's built-in security features, including:</p>
+    <ul class="policy-list">
+      <li>Device passcode or biometric lock (Face ID, Touch ID, fingerprint)</li>
+      <li>Device encryption (enabled by default on modern iOS and Android devices)</li>
+      <li>App sandboxing (each app's data is isolated from other apps)</li>
+    </ul>
+    <p>We recommend keeping your device software up to date and using a strong passcode or biometric authentication to protect your data.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>6. Data Retention and Deletion</h2>
+    <p>Your data persists on your device for as long as the app is installed. You can delete your data at any time by:</p>
+    <ul class="policy-list">
+      <li>Deleting individual leads, listings, or appointments within the app</li>
+      <li>Clearing the app's data through your device settings</li>
+      <li>Uninstalling the app (this removes all locally stored data)</li>
+    </ul>
+  </div>
+
+  <div class="policy-section">
+    <h2>7. Children's Privacy</h2>
+    <p>LeadEdge AI is a professional business tool designed for real estate agents. It is not intended for use by children under the age of 13. We do not knowingly collect information from children.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>8. Third-Party Services</h2>
+    <p>LeadEdge AI does not integrate with third-party analytics, advertising, or tracking services. The app uses the following system-level capabilities:</p>
+    <table class="policy-table">
+      <thead>
+        <tr>
+          <th>Capability</th>
+          <th>Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Camera access</td>
+          <td>Taking photos for listings and agent profile</td>
+        </tr>
+        <tr>
+          <td>Photo library access</td>
+          <td>Selecting images for listings and profile</td>
+        </tr>
+        <tr>
+          <td>Calendar access</td>
+          <td>Adding appointments to your device calendar</td>
+        </tr>
+        <tr>
+          <td>Device motion sensors</td>
+          <td>Holographic card tilt effect (gyroscope data is processed locally and not stored)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="policy-section">
+    <h2>9. Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. Any changes will be reflected in the "Effective Date" at the top of this document. We encourage you to review this policy periodically.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>10. Contact Us</h2>
+    <p>If you have any questions or concerns about this Privacy Policy or the App's data practices, please contact us at:</p>
+    <p><strong>Email:</strong> <a href="mailto:privacy@leadedgeai.com.au" style="color: var(--gold); text-decoration: none;">privacy@leadedgeai.com.au</a></p>
+    <p><strong>Website:</strong> <a href="https://www.leadedgeai.com.au" style="color: var(--gold); text-decoration: none;">www.leadedgeai.com.au</a></p>
+  </div>
+
+  <p style="font-size: 13px; color: var(--cream-muted); text-align: center; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--steel);">This privacy policy was last updated on March 30, 2026.</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663471506516/vjCrzyxYmmFqZxuT.png" alt="LeadEdge AI">
+      <span>LeadEdge AI</span>
+    </div>
+    <div class="footer-links">
+      <a href="mailto:hello@leadedgeai.com.au">hello@leadedgeai.com.au</a>
+      <a href="/">Home</a>
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms of Service</a>
+    </div>
+  </div>
+  <p class="footer-legal">&copy; 2026 LeadEdge AI. Trading as LeadEdge AI (ABN: Pending Registration). All rights reserved. Built for Australian real estate agents.</p>
+</footer>
+
+</body>
+</html>
